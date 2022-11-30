@@ -26,17 +26,18 @@ namespace A4MPGS
         static void Main(string[] args)
         {
             // Declare variables
-            string[] brandPurvisSiewert = new string[3];
+            string[] carBrands = new string[4];
             string[] carInventory = new string[20];
             string input;
             bool exitLoop = true;
 
-            Console.WriteLine("[Enter 3 Automotive Brands]\n");
+            Console.WriteLine("[Enter 4 Automotive Brands]\n");
             //For loop to prompt user for name of 3 brands
-            for (int i = 0; i < brandPurvisSiewert.Length; i++)
+            for (int i = 0; i < carBrands.Length; i++)
             {
                 Console.Write("Car Brand {0}: ", i + 1);
-                brandPurvisSiewert[i] = Console.ReadLine();
+                carBrands[i] = Console.ReadLine();
+                carBrands[i] = carBrands[i].ToUpper();
             }
 
             Console.Clear();
@@ -61,10 +62,10 @@ namespace A4MPGS
                 switch (input)
                 {
                     case "A":
-                        NewCarDetails(brandPurvisSiewert, carInventory);
+                        NewCarDetails(carBrands, carInventory);
                         break;
                     case "B":
-                        EditCarDetails(carInventory, brandPurvisSiewert);
+                        EditCarDetails(carInventory, carBrands);
                         break;
                     case "C":
                         DisplayCarDetails(carInventory);
@@ -83,7 +84,7 @@ namespace A4MPGS
         }
 
         //Method Adds car details.
-        private static void NewCarDetails(string[] brandPurvisSiewert, string[] carInventory)
+        private static void NewCarDetails(string[] carBrands, string[] carInventory)
         {
             //Declare variables
             string brandName = "";
@@ -106,13 +107,15 @@ namespace A4MPGS
                 do
                 {
                     //Brand Name and Model are taken using 2 strings
-                    Console.WriteLine("Car Brand: {0}", brandPurvisSiewert[0]);
-                    Console.WriteLine("Car Brand: {0}", brandPurvisSiewert[1]);
-                    Console.WriteLine("Car Brand: {0}", brandPurvisSiewert[2]);
+                    Console.WriteLine("Car Brand: {0}", carBrands[0]);
+                    Console.WriteLine("Car Brand: {0}", carBrands[1]);
+                    Console.WriteLine("Car Brand: {0}", carBrands[2]);
+                    Console.WriteLine("Car Brand: {0}", carBrands[3]);
                     Console.Write("Enter one of the following Car brands or type \"DONE\" for the menu: ");
                     brandName = Console.ReadLine();
+                    
 
-                    brandExists = CheckIfStringExists(brandPurvisSiewert, brandName);
+                    brandExists = CheckIfStringExists(carBrands, brandName);
 
                     //Brand Name is valid - must be one of the three brands in carBrands 
                     //if car brand doesnt exist and is ! "DONE"
@@ -145,12 +148,18 @@ namespace A4MPGS
                     modelNum = 0;
                     try
                     {
-                        //models must be 1,2,3,4 
+                        //models must be 1,2,3,4,5
                         //then prompt user to enter model
-                        Console.Write("\nEnter Brand model 1-4: ");
+                        Console.WriteLine("\n1) Sedan");
+                        Console.WriteLine("2) Coupe");
+                        Console.WriteLine("3) SUV");
+                        Console.WriteLine("4) Truck");
+                        Console.WriteLine("5) Hatchback");
+
+                        Console.Write("\nEnter Brand model 1-5: ");
                         modelNum = int.Parse(Console.ReadLine());
 
-                        if (modelNum < 1 || modelNum > 4)
+                        if (modelNum < 1 || modelNum > 5)
                         {
                             //throw exception if model is <1 or >4
                             throw new FormatException("\nNumbers out of range must be 1-4");
@@ -180,7 +189,7 @@ namespace A4MPGS
                     }
 
                     //loop while num is <1 or >4 or if or if the car already exists
-                } while ((modelNum < 1 || modelNum > 4) || CheckIfStringExists(carInventory, brandName + "-" + modelNum) == true);
+                } while ((modelNum < 1 || modelNum > 5) || CheckIfStringExists(carInventory, brandName + "-" + modelNum) == true);
 
                 //Brand Name and Model are taken using 2 strings
                 brandModel = modelNum.ToString();
@@ -216,7 +225,7 @@ namespace A4MPGS
         }
 
         //Method allows you to edit car details.
-        private static void EditCarDetails(string[] carInventory, string[] brandPurvisSiewert)
+        private static void EditCarDetails(string[] carInventory, string[] carBrands)
         {
             //Edit Brand
             string editBrandModel;
@@ -256,14 +265,16 @@ namespace A4MPGS
                 {
                     //take brand from list of brands.
                     Console.WriteLine("[Changing: ({0}) Enter New Brand Name]\n", editBrandModel);
-                    Console.WriteLine("Car Brand: {0}", brandPurvisSiewert[0]);
-                    Console.WriteLine("Car Brand: {0}", brandPurvisSiewert[1]);
-                    Console.WriteLine("Car Brand: {0}", brandPurvisSiewert[2]);
+                    Console.WriteLine("Car Brand: {0}", carBrands[0]);
+                    Console.WriteLine("Car Brand: {0}", carBrands[1]);
+                    Console.WriteLine("Car Brand: {0}", carBrands[2]);
+                    Console.WriteLine("Car Brand: {0}", carBrands[3]);
+
                     Console.Write("\nEnter one of the following Car Brands: ");
                     newBrand = Console.ReadLine();
 
                     //check if that brand is a valid brand
-                    brandExists = CheckIfStringExists(brandPurvisSiewert, newBrand);
+                    brandExists = CheckIfStringExists(carBrands, newBrand);
 
                     //if the brand doesnt exsits it is an invalid brand
                     if (brandExists == false)
@@ -287,14 +298,19 @@ namespace A4MPGS
 
                     try
                     {
-                        //take input 1-4
-                        Console.Write("\nEnter Brand model 1-4: ");
+                        //take input 1-5
+                        Console.WriteLine("\n1) Sedan");
+                        Console.WriteLine("2) Coupe");
+                        Console.WriteLine("3) SUV");
+                        Console.WriteLine("4) Truck");
+                        Console.WriteLine("5) Hatchback");
+                        Console.Write("\nEnter Brand model 1-5: ");
                         modelNum = int.Parse(Console.ReadLine());
 
                         // if model is <1 or >4 throw error that the car is not valid
-                        if (modelNum < 1 || modelNum > 4)
+                        if (modelNum < 1 || modelNum > 5)
                         {
-                            throw new Exception("\nNumbers out of range must be 1-4");
+                            throw new Exception("\nNumbers out of range must be 1-5");
                         }
                         // Check if the car brand and model exsits in carInventory
                         bool exists = CheckIfStringExists(carInventory, newBrand + "-" + modelNum);
@@ -310,7 +326,7 @@ namespace A4MPGS
                             break;
                         }
                     }
-                    catch(FormatException fEx)
+                    catch (FormatException fEx)
                     {
                         Console.WriteLine(fEx.Message);
                     }
@@ -320,7 +336,7 @@ namespace A4MPGS
                     }
 
                     //loop while the model number is valid or if the car doesnt exist
-                } while ((modelNum < 1 || modelNum > 4) || CheckIfStringExists(carInventory, newBrand + "-" + modelNum) == false);
+                } while ((modelNum < 1 || modelNum > 5) || CheckIfStringExists(carInventory, newBrand + "-" + modelNum) == false);
             }
             // else print brand record Not Found
             else if (carExists == false)
@@ -399,7 +415,38 @@ namespace A4MPGS
             //loop through car inventory and display the car inventory
             for (int i = 0; i < carInventory.Length; i++)
             {
-                Console.WriteLine(carInventory[i]);
+                if (string.IsNullOrEmpty(carInventory[i]))
+                {
+
+                    carInventory[i] = "NONE";
+
+                }
+                else if (carInventory[i].Contains('1'))
+                {
+                    carInventory[i] = carInventory[i].Replace("1", "Sedan");
+                    Console.WriteLine(carInventory[i]);
+                }
+                else if (carInventory[i].Contains('2'))
+                {
+                    carInventory[i] = carInventory[i].Replace("2", "Coupe");
+                    Console.WriteLine(carInventory[i]);
+                }
+                else if (carInventory[i].Contains('3'))
+                {
+                    carInventory[i] = carInventory[i].Replace("3", "SUV");
+                    Console.WriteLine(carInventory[i]);
+                }
+                else if (carInventory[i].Contains('4'))
+                {
+                    carInventory[i] = carInventory[i].Replace("4", "Truck");
+                    Console.WriteLine(carInventory[i]);
+                }
+                else if (carInventory[i].Contains('5'))
+                {
+                    carInventory[i] = carInventory[i].Replace("5", "Hatchback");
+                    Console.WriteLine(carInventory[i]);
+                }
+
             }
             //enter to return to menu
             Console.WriteLine("Press Enter to Return to main menu");
